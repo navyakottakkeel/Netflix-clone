@@ -19,7 +19,8 @@ const TitleCards = ({title, category}) => {
   }
 
   useEffect(() => {
-    fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options)
+
+    fetch(`https://api.themoviedb.org/3/movie/${category ? category : 'now_playing'}?language=en-US&page=1`, options)
     .then(res => res.json())
     .then(res => setApiData(res.results))
     .catch(err => console.error(err));
@@ -28,7 +29,7 @@ const TitleCards = ({title, category}) => {
 
   return (
     <div className='title-cards'>
-      <h2>{title?title:"Popular on Netflix"}</h2>
+      <h2>{title?title:"Now Playing"}</h2>
       <div className="card-list" ref={cardRef}>
         {apiData.map((card, index) => {
           return (
