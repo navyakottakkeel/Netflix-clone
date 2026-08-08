@@ -2,11 +2,12 @@ import React from "react";
 import "./Login.css";
 import logo from "../../assets/logo.png";
 import { useState } from "react";
-import { login, signup } from "../../firebase";
 import netflix_spinner from '../../assets/netflix_spinner.gif'
+import { useAuth } from "../../context/AuthContext";
 
 const Login = () => {
 
+  const {login, signup} = useAuth()
   const [signState, setSignState] = useState("Sign In");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
