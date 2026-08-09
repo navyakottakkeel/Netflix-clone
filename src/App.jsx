@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import Home from "./pages/Home/Home";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Player from "./pages/Player/Player";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "./context/AuthContext";
 import netflix_spinner from '../src/assets/netflix_spinner.gif'
+import MovieDetail from "./pages/MovieDetail/MovieDetail";
+import Watchlist from "./pages/Watchlist/Watchlist";
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { user, loading } = useAuth();
 
@@ -16,10 +19,12 @@ const App = () => {
     if (loading) {
       return;
     }
-    if (user) {
-      navigate("/");
-    } else {
+    if (!user && location.pathname !== "/login") {
       navigate("/login");
+    }
+  
+    if (user && location.pathname === "/login") {
+      navigate("/");
     }
   }, [user, loading, navigate]);
 
@@ -37,6 +42,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/player/:id" element={<Player />} />
+        <Route path="/movie/:id" element={<MovieDetail />}/>
+        <Route path="/watchlist" element={<Watchlist />} />
       </Routes>
     </div>
   );
